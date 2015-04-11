@@ -27,5 +27,10 @@
             android:text="Parties"
             android:id="@+id/partiesText" />
     </LinearLayout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragmentContainter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </RelativeLayout>
