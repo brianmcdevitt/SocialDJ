@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
@@ -83,9 +84,11 @@ public class MainActivity extends Activity implements
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 googleApiClient);
         if (mLastLocation != null) {
-            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-        }
+
+            (TextView)findViewById(R.id.Latitude).setText(
+                    new Double(mLastLocation.getLatitude()).toString());
+            (TextView)findViewById(R.id.Longitude).setText(
+                    new Double(mLastLocation.getLongitude()).toString());        }
     }
 
     @Override
