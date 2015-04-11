@@ -17,6 +17,9 @@ import com.spotify.sdk.android.player.Player;
 import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class MainActivity extends Activity implements
         PlayerNotificationCallback, ConnectionStateCallback {
 
@@ -30,6 +33,15 @@ public class MainActivity extends Activity implements
     private static final int REQUEST_CODE = 1337;
 
     private Player mPlayer;
+
+    private String[] arraySongs = {"spotify:track:7wqSzGeodspE3V6RBD5W8L", "spotify:track:3twQx3psUMJKj4wna5d1zU", "spotify:track:2PIvq1pGrUjY007X5y1UpM",
+            "spotify:track:32OlwWuMpZ6b0aN2RZOeMS", "spotify:track:34gCuhDGsG4bRPIf9bb02f", "spotify:track:5eWgDlp3k6Tb5RD8690s6I", "spotify:track:78TTtXnFQPzwqlbtbwqN0y",
+            "spotify:track:1ip2IGDWMrUmlaepEbWlL8", "spotify:track:6N9ZOtguCnnrvwH7zD82WJ", "spotify:track:66hayvUbTotekKU3H4ta1f", "spotify:track:0HFx7PLqzGxSfN59j3UHmR",
+            "spotify:track:4kbj5MwxO1bq9wjT5g9HaA", "spotify:track:7ioiB40H9xKs04QtIso2I3", "spotify:track:5InOp6q2vvx0fShv3bzFLZ", "spotify:track:2bJvI42r8EF3wxjOuDav4r",
+            "spotify:track:4iZPNYqzI2L0uwuUKun7Aa", "spotify:track:0aOluBqXYd0rFSCsgDyAWX", "spotify:track:2tpfxAXiI52znho4WE3XFA", "spotify:track:79XrkTOfV1AqySNjVlygpW",
+            "spotify:track:3keUgTGEoZJt0QkzTB6kHg"};
+    private ArrayList<String> topTwentySongs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +70,8 @@ public class MainActivity extends Activity implements
                     public void onInitialized(Player player) {
                         mPlayer.addConnectionStateCallback(MainActivity.this);
                         mPlayer.addPlayerNotificationCallback(MainActivity.this);
-                        mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
+                        topTwentySongs = new ArrayList<String>(Arrays.asList(arraySongs));
+                        mPlayer.play(topTwentySongs);
                     }
 
                     @Override
