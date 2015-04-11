@@ -52,6 +52,9 @@ public class MainActivity extends Activity implements
     // Can be any integer
     private static final int REQUEST_CODE = 1337;
 
+    private TextView latTextView;
+    private TextView longTextView;
+
     private Player mPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +88,11 @@ public class MainActivity extends Activity implements
                 googleApiClient);
         if (mLastLocation != null) {
 
-            (TextView)findViewById(R.id.Latitude).setText(
-                    new Double(mLastLocation.getLatitude()).toString());
-            (TextView)findViewById(R.id.Longitude).setText(
-                    new Double(mLastLocation.getLongitude()).toString());        }
+            latTextView = (TextView)findViewById(R.id.Latitude);
+            latTextView.setText(new Double(mLastLocation.getLatitude()).toString());
+            longTextView = (TextView)findViewById(R.id.Longitude);
+            longTextView.setText(new Double(mLastLocation.getLongitude()).toString());
+        }
     }
 
     @Override
