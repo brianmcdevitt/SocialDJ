@@ -84,6 +84,7 @@ public class MainActivity extends Activity implements
     ///////////////////////////////////Callback Interface methods
     @Override
     public void onConnected(Bundle connectionHint) {
+        System.out.println("working");
         Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 googleApiClient);
         if (mLastLocation != null) {

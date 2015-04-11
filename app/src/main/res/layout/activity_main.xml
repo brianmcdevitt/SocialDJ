@@ -31,14 +31,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Laditude"
+            android:text="@string/Latitude"
             android:id="@+id/Latitude" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Longitude"
+            android:text="@string/Longitude"
             android:id="@+id/Longitude" />
     </LinearLayout>
 </RelativeLayout>
