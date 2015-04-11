@@ -10,6 +10,7 @@ import android.view.View;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
+import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
 import com.spotify.sdk.android.player.Player;
@@ -46,6 +47,27 @@ public class MainActivity extends Activity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
+
+        // Check if result comes from the correct activity
+        if (requestCode == REQUEST_CODE) {
+            AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
+            if (response.getType() == AuthenticationResponse.Type.TOKEN) {
+                Config playerConfig = new Config(this, response.getAccessToken(), CLIENT_ID);
+                mPlayer = Spotify.getPlayer(playerConfig, this, new Player.InitializationObserver() {
+                    @Override
+                    public void onInitialized(Player player) {
+                        mPlayer.addConnectionStateCallback(MainActivity.this);
+                        mPlayer.addPlayerNotificationCallback(MainActivity.this);
+                        mPlayer.play("spotify:track:2TpxZ7JUBn3uw46aR7qd6V");
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        Log.e("MainActivity", "Could not initialize player: " + throwable.getMessage());
+                    }
+                });
+            }
+        }
     }
 
     @Override
