@@ -23,6 +23,9 @@ import java.util.Arrays;
 public class MainActivity extends Activity implements
         PlayerNotificationCallback, ConnectionStateCallback {
 
+    private static final String TAG = "MainActivity";
+    private static final String IS_INIT = "isInit";
+
     // TODO: Replace with your client ID
     private static final String CLIENT_ID = "c66de50901224286b0d57255b03d65e7";
     // TODO: Replace with your redirect URI
@@ -81,6 +84,13 @@ public class MainActivity extends Activity implements
                 });
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG, "onSaveInstanceState");
+        savedInstanceState.putBoolean(IS_INIT, mPlayer.isInitialized());
     }
 
     @Override

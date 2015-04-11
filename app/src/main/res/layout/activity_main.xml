@@ -17,8 +17,15 @@
             android:layout_width="191dp"
             android:layout_height="wrap_content"
             android:text="Host Party"
-            android:id="@+id/button"
+            android:id="@+id/hostPartyButton"
             android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Parties"
+            android:id="@+id/partiesText" />
     </LinearLayout>
 
 </RelativeLayout>
