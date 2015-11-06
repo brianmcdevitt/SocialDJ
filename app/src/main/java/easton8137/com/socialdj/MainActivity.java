@@ -36,20 +36,13 @@ public class MainActivity extends Activity implements
         ConnectionCallbacks, OnConnectionFailedListener{
 
     GoogleApiClient googleApiClient;
-    // Request code to use when launching the resolution activity
     private static final int REQUEST_RESOLVE_ERROR = 1001;
-    // Unique tag for the error dialog fragment
     private static final String DIALOG_ERROR = "dialog_error";
-    // Bool to track whether the app is already resolving an error
     private boolean mResolvingError = false;
 
-    // TODO: Replace with your client ID
     private static final String CLIENT_ID = "c66de50901224286b0d57255b03d65e7";
-    // TODO: Replace with your redirect URI
     private static final String REDIRECT_URI = "socialdj://callback";
 
-    // Request code that will be used to verify if the result comes from correct activity
-    // Can be any integer
     private static final int REQUEST_CODE = 1337;
 
     private TextView latTextView;
@@ -69,7 +62,6 @@ public class MainActivity extends Activity implements
 
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
 
-        //Google Api Client
         buildGoogleApiClient();
     }
 
@@ -81,7 +73,6 @@ public class MainActivity extends Activity implements
                 .build();
     }
 
-    ///////////////////////////////////Callback Interface methods
     @Override
     public void onConnected(Bundle connectionHint) {
         System.out.println("working");
@@ -106,49 +97,40 @@ public class MainActivity extends Activity implements
     @Override
     public void onConnectionFailed(ConnectionResult result) {
         if (mResolvingError) {
-            // Already attempting to resolve an error.
             return;
         } else if (result.hasResolution()) {
             try {
                 mResolvingError = true;
                 result.startResolutionForResult(this, REQUEST_RESOLVE_ERROR);
             } catch (IntentSender.SendIntentException e) {
-                // There was an error with the resolution intent. Try again.
                 googleApiClient.connect();
             }
         } else {
-            // Show dialog using GooglePlayServicesUtil.getErrorDialog()
             showErrorDialog(result.getErrorCode());
             mResolvingError = true;
         }
 
     }
 
-    // The rest of this code is all about building the error dialog
-
-    /* Creates a dialog for an error message */
+    
     private void showErrorDialog(int errorCode) {
-        // Create a fragment for the error dialog
         ErrorDialogFragment dialogFragment = new ErrorDialogFragment();
-        // Pass the error that should be displayed
+        
         Bundle args = new Bundle();
         args.putInt(DIALOG_ERROR, errorCode);
         dialogFragment.setArguments(args);
         dialogFragment.show(getFragmentManager(), "errordialog");
     }
 
-    /* Called from ErrorDialogFragment when the dialog is dismissed. */
     public void onDialogDismissed() {
         mResolvingError = false;
     }
 
-    /* A fragment to display an error dialog */
     public static class ErrorDialogFragment extends DialogFragment {
         public ErrorDialogFragment() { }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Get the error code and retrieve the appropriate dialog
             int errorCode = this.getArguments().getInt(DIALOG_ERROR);
             return GooglePlayServicesUtil.getErrorDialog(errorCode,
                     this.getActivity(), REQUEST_RESOLVE_ERROR);
@@ -166,7 +148,6 @@ public class MainActivity extends Activity implements
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
 
-        // Check if result comes from the correct activity
         if (requestCode == REQUEST_CODE) {
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
@@ -191,7 +172,7 @@ public class MainActivity extends Activity implements
     @Override
     protected void onStart() {
         super.onStart();
-        if (!mResolvingError) {  // more about this later
+        if (!mResolvingError) {
             googleApiClient.connect();
         }
     }
